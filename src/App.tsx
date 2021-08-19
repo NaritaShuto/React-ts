@@ -1,24 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import logo from './logo.svg';
+// import './App.css';
+// import Article from './components/Article';
+// import TextInput from './components/TextInput';
+// import Counter from './components/Counter';
+import ToggleButton from './components/ToggleButton';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {/* <Article
+        title="新・日本一わかりやすいReact入門基礎編"
+        content="今日のトピックはpropsのデータの受け渡しについて"
+      /> */}
+      {/* <Article
+        title="新・日本一わかりやすいReact入門基礎編"
+        content="今日のトピックは．．．"
+      /> */}
+
+      {/* 第7・8回 */}
+      {/* <TextInput /> */}
+      {/* <Counter /> */}
+      <ToggleButton />
     </div>
   );
 }
