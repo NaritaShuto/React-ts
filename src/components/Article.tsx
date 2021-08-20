@@ -15,8 +15,7 @@ const Article: React.FC<Props> = ({ title, content }) => {
   };
   return (
     <div>
-      {/* Titleがうまく読み込めていないので一時的に動かして画面表示できるようにしている（後で修正します） */}
-      <Title content={title} />
+      <Title title={title} />
       <Content content={content} />
       <PublishButton isPublished={isPublished} OnClick={Published} />
     </div>
