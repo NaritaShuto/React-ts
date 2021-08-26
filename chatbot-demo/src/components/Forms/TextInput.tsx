@@ -1,22 +1,27 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import { PinDropSharp } from '@material-ui/icons';
 
 type Props = {
-    content: string
+    label: string
+    multiline: boolean
+    rows: number
+    value: string
+    type: string
+    onChange: (event: React.ChangeEvent) => void
 }
 
-const TextInput: React.FC<Props> = ({ content }) => {
+const TextInput: React.FC<Props> = ({ label, multiline, rows, value, type, onChange, }) => {
     return (
         <TextField
-            fullwidth={true}
-            label={props.label}
+            fullWidth
+            id="standard-basic"
+            label={label}
             margin={"dense"}
-            multiline={props.multiline}
-            rows={props.rows}
-            value={props.value}
-            type={PinDropSharp.type}
-            onChange={PinDropSharp.onChange}
+            multiline={multiline}
+            rows={rows}
+            value={value}
+            type={type}
+            onChange={onChange}
         />
     )
 }

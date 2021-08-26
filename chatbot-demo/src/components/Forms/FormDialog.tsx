@@ -1,44 +1,59 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextInput from './TextInput';
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import TextInput from './TextInput'
 
-type Props = {}
-type State = {}
+type Props = {
+    open: boolean
+    handleClose: () => void
+}
+
+type State = {
+    name: string
+    email: string
+    description: string
+}
 
 class FromDialog extends React.Component<Props, State> {
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
         this.state ={
             name: "",
-            emaile: "",
-            description: ""
+            email: "",
+            description: "",
         }
 
         this.inputName = this.inputName.bind(this)
         this.inputEmail = this.inputEmail.bind(this)
-        this.inputDescroption = this.inputDescroption.bind(this)
+        this.inputDescription = this.inputDescription.bind(this)
     }
 
-    inputName = (event) => {
+    inputName = (event: React.ChangeEvent) => {
+        if (!(event.target instanceof HTMLInputElement)) {
+            return
+        }
         this.setState({ name: event.target.value })
     }
 
-    inputEmail = (event) => {
+    inputEmail = (event: React.ChangeEvent) => {
+        if (!(event.target instanceof HTMLInputElement)) {
+            return
+        }
         this.setState({ email: event.target.value })
     }
 
-    inputDescroption = (event) => {
-        this.setState({ descroption: event.target.value })
+    inputDescription = (event: React.ChangeEvent) => {
+        if (!(event.target instanceof HTMLInputElement)) {
+            return
+        }
+        this.setState({ description: event.target.value })
     }
-    submit = () => {
-        const name = this.state.name
-        const email = this.state.email
-        const description = this.state.description
+    
+    submitForm = () => {
+        const {name, email, description} = this.state
     }
 
     render() {
@@ -61,12 +76,8 @@ class FromDialog extends React.Component<Props, State> {
                 />
                 <TextInput 
                     label={"お問い合わせ内容（必須）"} multiline={true} rows={5}
-                    value={this.state.description} type={"text"} onChange={this.inputDescroption}
+                    value={this.state.description} type={"text"} onChange={this.inputDescription}
                 />
-              <DialogContentText id="alert-dialog-description">
-                Let Google help apps determine location. This means sending anonymous location data to
-                Google, even when no apps are running.
-              </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button onClick={this.props.handleClose} color="primary">

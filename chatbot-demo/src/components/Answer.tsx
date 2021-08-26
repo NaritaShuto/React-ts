@@ -1,10 +1,14 @@
 import React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { PinDropSharp } from '@material-ui/icons';
 
 type Props = {
     content: string
+    nextId: string
+    select: (
+        selectedAnswer: string, 
+        nextQuestionId: string
+    ) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -21,11 +25,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 }));
 
-const Answer: React.FC<Props> = ({ content }) => {
+const Answer: React.FC<Props> = ({ content, nextId, select }) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const classes = useStyles();
     return(
-        <Button variant="contained" color="primary" onClick={() => props.select(props.content, props.nextId)}>
+        <Button variant="contained" color="primary" onClick={() => select(content, nextId)}>
             {content}
         </Button>
     )

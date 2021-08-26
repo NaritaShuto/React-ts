@@ -1,122 +1,124 @@
-import React from 'react';
-import defaultDataset from './dataset';
-import './assets/styles/index.css';
-import {AnswersList, Chats} from './components/index';
+import React from 'react'
+import defaultDataset from './dataset'
+import './assets/styles/style.css'
+import { AnswersList, Chats } from './components/index'
+import FormDialog from './components/Forms/FormDialog'
 
-type Props = {}
+// TS用に型を定義
 type State = {
-  answers: {
-    content: string
-    nextId: string
-  }[]
-  chats: {
-    text: string
-    type: string
-  }[]
-  currentId: string
-  dataset: typeof defaultDataset
-  open: boolean
+    answers: {
+        content: string
+        nextId: string
+    }[]
+    chats: {
+        text: string
+        type: string
+    }[]
+    currentID: string
+    dataset: typeof defaultDataset
+    open: boolean
 }
 
-class App extends React.Component<Props, State> {
+export default class App extends React.Component<{}, State> {
   constructor(props: {}) {
-    super(props);
-    this.state = {
-      answers: [],
-      chats: [],
-      currentId: 'init',
-      dataset: defaultDataset,
-      open: true
-    }
-    this.selectAnswer = this.selectAnswer.bind(this)
-    this.handleClickOpen = this.handleClickOpen.bind(this)
-    this.handleClose = this.handleClose.bind(this)
-  }
-
-  displayNextQuestion = (nextQuestionId) => {
-    const chats = this.state.chats
-    chats.push({
-      text: this.state.dataset[nextQuestionId].question,
-      type: 'question'
-    })
-
-    this.setState({
-      answers: this.state.dataset[nextQuestionId].answers,
-      chats: chats,
-      currentId: nextQuestionId
-    })
-  }
-
-  selectAnswer = (selectedAnswer, nextQuestionId) => {
-    switch(true) {
-      case(nextQuestionId === 'init'):
-        setTimeout(() => this.displayNextQuestion(nextQuestionId), 500);
-        break;
-
-      case(nextQuestionId === 'content'):
-        this.handleClickOpen()
-        break;
-
-      case(/^https:*/.test(nextQuestionId)):
-        const a = document.createElement('a');
-        a.href = nextQuestionId;
-        a.target = '_blank';
-        a.click();
-        break;
-      
-      default:
-        const chat = {
-          text: selectedAnswer,
-          type: 'answer'
+        super(props)
+        this.state = {
+            answers: [],
+            chats: [],
+            currentID: 'init',
+            dataset: defaultDataset,
+            open: false,
         }
+        this.selectAnswer = this.selectAnswer.bind(this)
+        this.handleClose = this.handleClose.bind(this)
+        this.handleClickOpen = this.handleClickOpen.bind(this)
+    }
 
-        const chats = this.state.chats;
-        chats.push(chat)
-
-        this.setState({
-          chats: chats
+    displayNextQuestion = (nextQuestionId: string) => {
+        const chats = this.state.chats
+        chats.push({
+            text: this.state.dataset[nextQuestionId].question,
+            type: 'question',
         })
 
-        setTimeout(() => this.displayNextQuestion(nextQuestionId), 500);
-        break;
+        this.setState({
+            answers: this.state.dataset[nextQuestionId].answers,
+            chats: chats,
+            currentID: nextQuestionId,
+        })
     }
-  }
 
-  handleClickOpen = () => {
-    this.setState({ open: true })
-  }
+    selectAnswer = (selectedAnswer: string, nextQuestionId: string) => {
+        switch (true) {
+            case nextQuestionId === 'init': 
+                setTimeout(() => this.displayNextQuestion(nextQuestionId), 500)
+                break;
+            
+            case nextQuestionId === 'contact': 
+                this.handleClickOpen()
+                break;
+            
+            case /^https:*/.test(nextQuestionId): 
+                const a = document.createElement('a')
+                a.href = nextQuestionId
+                a.target = '_blank'
+                a.click()
+                break;
+            
+            default: 
+                const chats = this.state.chats
+                chats.push({
+                    text: selectedAnswer,
+                    type: 'answer',
+                })
 
-  handleClose = () => {
-    this.setState({ open: false })
-  }
+                this.setState({
+                    chats: chats
+                })
 
-  componentDidMount() {
-    const initAnswer = "";
-    this.selectAnswer(initAnswer, this.state.currentId)
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const scrollArea = document.getElementById('scroll-area')
-    if(scrollArea) {
-      scrollArea.scrollTop = scrollArea.scrollHeight
+                setTimeout(() => this.displayNextQuestion(nextQuestionId), 500)
+                break;
+            
+        }
     }
+
+    componentDidMount() {
+      const initAnswer = ''
+      this.selectAnswer(initAnswer, this.state.currentID)
   }
-  
-  render() {
-    return (
-      <section className="c-section">
-        <div className="c-box">
-          {/* {this.state.currentId} */}
-          <Chats chats={this.state.chats} />
-          <AnswersList
-            answers={this.state.answers}
-            select={this.selectAnswer}
-          />
-          <FromDialog open={this.state.open} handleClose={this.handleClose} />
-        </div>
-      </section>
-    )
+
+  componentDidUpdate() {
+      const scrollArea = document.getElementById('scroll-area')
+      if (scrollArea) {
+          scrollArea.scrollTop = scrollArea.scrollHeight
+      }
   }
+    
+    handleClickOpen = () => {
+      this.setState({ open: true })
+    }
+
+    handleClose = () => {
+      this.setState({ open: false })
+    }
+
+    render() {
+        return (
+            <div>
+                <section className="c-section">
+                    <div className="c-box">
+                        <Chats chats={this.state.chats} />
+                        <AnswersList
+                            answers={this.state.answers}
+                            select={this.selectAnswer}
+                        />
+                        <FormDialog
+                            open={this.state.open}
+                            handleClose={this.handleClose}
+                        />
+                    </div>
+                </section>
+            </div>
+        )
+    }
 }
-
-export default App
