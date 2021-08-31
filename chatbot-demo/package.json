@@ -19,7 +19,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "fix:prettier": "prettier -w --no-error-on-unmatched-pattern \"{,.**/,**/}{.*,*}.{ts,tsx,js,jsx,css,scss,json,html}\" --ignore-path .gitignore",
+    "fix:eslint": "eslint --fix \"{public/**/,src/**/}{.*,*}.{ts,tsx,js,jsx}\" --ignore-path .gitignore"
   },
   "eslintConfig": {
     "extends": [
@@ -38,5 +40,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-dom": "^17.0.9",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.3.2"
   }
 }

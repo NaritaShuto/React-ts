@@ -1,0 +1,13 @@
+{
+  "files.eol": "\n",
+  // 保存時のフォーマッタ実行はPrettierを使用。
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  // 保存時のアクションで、eslintとstylelintのfixを行う。
+  "editor.codeActionsOnSave": [
+    "source.fixAll.eslint",
+    "source.fixAll.stylelint"
+  ],
+  "eslint.nodePath": "chatbot-demo/node_modules",
+  "eslint.workingDirectories": [{ "mode": "auto" }]
+}
